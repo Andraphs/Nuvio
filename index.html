@@ -2,7 +2,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nuvio — Personal Finance &amp; Cash Flow Intelligence</title>
-  <script src="https://app-companion-430619.appspot.com/static/cdn/v1/tailwindcss-play.js" data-stitch-cdn-src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
 globalThis.tailwind = globalThis.tailwind || {};
 globalThis.tailwind.config = {
@@ -115,7 +115,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
     }
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700&amp;family=Instrument+Sans:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet">
-  <link href="https://app-companion-430619.appspot.com/static/cdn/fonts/v1/material-symbols-outlined.css" data-stitch-cdn-href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
   <style>
     :root {
       --bg: #000000;
@@ -140,6 +140,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       --hairline: rgba(255, 255, 255, 0.08);
       --btn-dark-border: rgba(255, 255, 255, 0.14);
       --active-ring: rgba(147, 18, 255, 0.36);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
     html, body {
       background-color: var(--bg);
@@ -179,22 +180,48 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       box-shadow: inset 0 1px 0 rgba(224, 179, 255, 0.14), 0 0 18px rgba(147, 18, 255, 0.18);
     }
     .obsidian-violet-btn {
-      background: linear-gradient(135deg, var(--violet-grad-a), var(--violet-grad-b));
-      color: var(--text);
-      box-shadow: 0 8px 26px rgba(147, 18, 255, 0.42), inset 0 1px 0 rgba(224, 179, 255, 0.36);
+      background: linear-gradient(135deg, var(--violet-grad-a) 0%, var(--violet-grad-b) 100%);
+      color: #ffffff;
+      box-shadow:
+        0 0 20px rgba(147, 18, 255, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      transition:
+        transform 180ms var(--ease-out),
+        box-shadow 180ms var(--ease-out),
+        filter 180ms var(--ease-out);
     }
-    .obsidian-violet-btn:hover {
-      filter: brightness(1.08);
-      box-shadow: 0 10px 32px rgba(177, 78, 255, 0.52), inset 0 1px 0 rgba(224, 179, 255, 0.48);
+    a.obsidian-violet-btn:hover,
+    button.obsidian-violet-btn:hover {
+      filter: brightness(1.12);
+      box-shadow:
+        0 0 32px rgba(160, 32, 255, 0.72),
+        inset 0 1px 0 rgba(255, 255, 255, 0.36);
+      transform: translateY(-1px);
+    }
+    a.obsidian-violet-btn:active,
+    button.obsidian-violet-btn:active {
+      transform: translateY(0);
     }
     .obsidian-dark-btn {
-      background-color: rgba(14, 12, 20, 0.78);
-      border: 1px solid var(--btn-dark-border);
+      background: rgba(18, 15, 26, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       color: var(--text);
+      transition:
+        transform 180ms var(--ease-out),
+        box-shadow 180ms var(--ease-out),
+        border-color 180ms var(--ease-out),
+        background-color 180ms var(--ease-out);
     }
     .obsidian-dark-btn:hover {
-      border-color: var(--active-ring);
-      background-color: rgba(23, 20, 32, 0.92);
+      background: rgba(34, 24, 52, 0.92);
+      border-color: rgba(160, 32, 255, 0.65);
+      box-shadow: 0 0 26px rgba(147, 18, 255, 0.44);
+      transform: translateY(-1px);
+    }
+    .obsidian-dark-btn:active {
+      transform: translateY(0);
     }
     .obsidian-hero-card {
       background-color: var(--panel-surface);
@@ -232,8 +259,116 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       vertical-align: middle;
       flex-shrink: 0;
     }
+    @keyframes hubPulse {
+      0%, 100% {
+        box-shadow: 0 0 22px rgba(147, 18, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      }
+      50% {
+        box-shadow: 0 0 38px rgba(177, 78, 255, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+      }
+    }
+    .hub-pulse {
+      animation: hubPulse 3.2s ease-in-out infinite;
+    }
+    .hover-card {
+      transition:
+        transform 260ms var(--ease-out),
+        border-color 260ms var(--ease-out),
+        box-shadow 260ms var(--ease-out),
+        background-color 260ms var(--ease-out);
+    }
+    .hover-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(160, 32, 255, 0.45);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65), 0 0 32px rgba(147, 18, 255, 0.18);
+    }
+    .hover-mini-card {
+      transition:
+        transform 200ms var(--ease-out),
+        border-color 200ms var(--ease-out),
+        background-color 200ms var(--ease-out);
+    }
+    .hover-mini-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(160, 32, 255, 0.45);
+      background-color: rgba(23, 20, 34, 0.9);
+    }
+    .hover-arrow {
+      transition: transform 200ms var(--ease-out);
+    }
+    .obsidian-violet-btn:hover .hover-arrow {
+      transform: translateX(3px);
+    }
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .hero-enter {
+      animation: heroFadeUp 680ms var(--ease-out) backwards;
+    }
+    .hero-enter-d1 { animation-delay: 60ms; }
+    .hero-enter-d2 { animation-delay: 140ms; }
+    .hero-enter-d3 { animation-delay: 220ms; }
+    .hero-enter-d4 { animation-delay: 300ms; }
+    .hero-enter-d5 { animation-delay: 400ms; }
+
+    @keyframes marqueeLoop {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeLoop 26s linear infinite;
+      will-change: transform;
+    }
+    .marquee-wrap:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .faq-chevron {
+      transition: transform 280ms var(--ease-out);
+    }
+    details[open] .faq-chevron {
+      transform: rotate(180deg);
+    }
+    .faq-body {
+      overflow: hidden;
+      transition: height 300ms var(--ease-out), opacity 240ms var(--ease-out);
+    }
+    #main-navbar {
+      background-color: rgba(11, 9, 17, 0);
+      border-bottom: 1px solid rgba(255, 255, 255, 0);
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      transition:
+        background-color 420ms var(--ease-out),
+        border-color 420ms var(--ease-out),
+        backdrop-filter 420ms var(--ease-out),
+        -webkit-backdrop-filter 420ms var(--ease-out),
+        box-shadow 420ms var(--ease-out);
+    }
+    #main-navbar.is-scrolled {
+      background-color: rgba(16, 13, 24, 0.36);
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px) saturate(145%);
+      -webkit-backdrop-filter: blur(18px) saturate(145%);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
     @media (prefers-reduced-motion: reduce) {
       .hero-video-layer { display: none !important; }
+      .marquee-track { animation: none !important; }
       * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
     }
   </style>
@@ -241,9 +376,9 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
 <body class="bg-surface text-on-surface font-body selection:bg-primary/40 selection:text-on-surface">
 
   <!-- ==================== HERO SECTION (Royal Violet Starfield + Planet Rim + Rising Nuvio Dashboard) ==================== -->
-  <section id="home" class="relative w-full min-h-[1024px] overflow-hidden bg-surface flex flex-col justify-between pt-5 pb-0" data-stitch-vh="min-h-[1024px]===min-h-screen">
+  <section id="home" class="relative w-full min-h-[1024px] overflow-hidden bg-surface flex flex-col justify-between pt-20 sm:pt-24 pb-0" data-stitch-vh="min-h-[1024px]===min-h-screen">
     <!-- Procedural Starfield Canvas + Planet Rim Fallback -->
-    <canvas id="starfield-canvas" class="pointer-events-none fixed inset-0 w-full h-full z-0" aria-hidden="true" width="1280" height="4594"></canvas>
+    <canvas id="starfield-canvas" class="pointer-events-none fixed inset-0 w-full h-full z-0" aria-hidden="true" width="1280" height="4858"></canvas>
 
     <!-- Atmospheric Royal Violet Planet Rim Glow -->
     <div class="pointer-events-none absolute inset-x-0 top-0 h-[620px] planet-horizon-top z-0" aria-hidden="true"></div>
@@ -254,43 +389,45 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       <source src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e859f229-8ebd-43fb-a5a0-58006ba75327.mp4" type="video/mp4">
     </video>
 
-    <!-- Top Navigation Bar -->
-    <header class="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
-      <!-- Brand Logo -->
-      <a href="#home" class="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-md">
-        <div class="w-9 h-9 rounded-md obsidian-violet-btn flex items-center justify-center text-on-primary">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5.5 17.5V6.5L13 14.5V6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M13 14.5L18.5 8.5V17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.7"></path>
-            <circle cx="18.5" cy="6.5" r="1.5" fill="currentColor"></circle>
-          </svg>
-        </div>
-        <span data-design-text-token="headline-md" class="font-headline text-headline-md tracking-tight bg-gradient-to-r from-[#f7f7f8] to-[#e0b3ff] bg-clip-text text-transparent">Nuvio</span>
-      </a>
-
-      <!-- Centered Pill Navigation -->
-      <nav aria-label="Primary" class="hidden md:flex items-center gap-1 p-1.5 rounded-full obsidian-nav-capsule border">
-        <a href="#home" class="px-4 py-1.5 rounded-full bg-[#171420] border border-primary/40 font-body text-label-lg text-on-surface">Home</a>
-        <a href="#features" class="px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Features</a>
-        <a href="#advantage" class="px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Cash Flow</a>
-        <a href="#pricing" class="px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Pricing</a>
-        <a href="#faq" class="px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">FAQ</a>
-      </nav>
-
-      <!-- Right Actions -->
-      <div class="flex items-center gap-3">
-        <a href="dashboard.html" class="hidden sm:inline-flex font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Live Demo</a>
-        <a href="#pricing" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full obsidian-violet-btn font-body text-label-lg transition-all duration-state-change focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
-          <span data-design-text-token="label-lg">Get Started</span>
+    <!-- Top Navigation Bar (Fixed) -->
+    <header id="main-navbar" class="fixed top-0 inset-x-0 z-50 w-full transition-all duration-300 hero-enter">
+      <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+        <!-- Brand Logo -->
+        <a href="#home" class="relative z-10 flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-md">
+          <div class="w-9 h-9 rounded-md obsidian-violet-btn flex items-center justify-center text-on-primary">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5.5 17.5V6.5L13 14.5V6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M13 14.5L18.5 8.5V17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.7"></path>
+              <circle cx="18.5" cy="6.5" r="1.5" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <span data-design-text-token="headline-md" class="font-headline text-headline-md tracking-tight bg-gradient-to-r from-[#f7f7f8] to-[#e0b3ff] bg-clip-text text-transparent">Nuvio</span>
         </a>
-        <button id="mobile-nav-btn" type="button" aria-label="Toggle navigation menu" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full obsidian-nav-capsule border text-on-surface">
-          <span class="material-symbols-outlined text-title-md" aria-hidden="true">menu</span>
-        </button>
+
+        <!-- Centered Pill Navigation -->
+        <nav aria-label="Primary" class="hidden md:flex items-center gap-1 p-1.5 rounded-full obsidian-nav-capsule border md:absolute md:left-1/2 md:-translate-x-1/2">
+          <a href="#home" class="px-4 py-1.5 rounded-full bg-[#171420] border border-primary/40 font-body text-label-lg text-on-surface">Home</a>
+          <a href="#features" class="px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Features</a>
+          <a href="#advantage" class="px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Cash Flow</a>
+          <a href="#pricing" class="px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">Pricing</a>
+          <a href="#faq" class="px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change">FAQ</a>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="relative z-10 flex items-center gap-3">
+          <a href="dashboard.html" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full obsidian-dark-btn font-body text-label-lg whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary">Live Demo</a>
+          <a href="#pricing" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full obsidian-violet-btn font-body text-label-lg transition-all duration-state-change focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
+            <span data-design-text-token="label-lg">Get Started</span>
+          </a>
+          <button id="mobile-nav-btn" type="button" aria-label="Toggle navigation menu" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full obsidian-nav-capsule border text-on-surface">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">menu</span>
+          </button>
+        </div>
       </div>
     </header>
 
     <!-- Mobile Nav Drawer -->
-    <div id="mobile-nav-drawer" class="hidden md:hidden relative z-20 mx-4 mt-3 p-4 rounded-xl obsidian-panel flex-col gap-2">
+    <div id="mobile-nav-drawer" class="hidden md:hidden fixed top-20 inset-x-4 z-40 p-4 rounded-xl obsidian-panel flex-col gap-2">
       <a href="#home" class="px-3 py-2 rounded-lg bg-[#171420] border border-primary/40 font-body text-label-lg text-on-surface">Home</a>
       <a href="#features" class="px-3 py-2 rounded-lg font-body text-label-lg text-on-surface-variant hover:text-on-surface">Features</a>
       <a href="#advantage" class="px-3 py-2 rounded-lg font-body text-label-lg text-on-surface-variant hover:text-on-surface">Cash Flow</a>
@@ -299,24 +436,24 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
     </div>
 
     <!-- Centered Hero Copy + CTA -->
-    <div class="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10 flex flex-col items-center text-center gap-5">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full obsidian-nav-capsule border">
-        <span class="w-2 h-2 rounded-full bg-secondary" aria-hidden="true"></span>
+    <div class="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-10 flex flex-col items-center text-center gap-5">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full obsidian-nav-capsule border hero-enter hero-enter-d1">
+        <span class="w-2 h-2 rounded-full bg-secondary animate-pulse" aria-hidden="true"></span>
         <span data-design-text-token="label-sm" class="font-body text-label-sm text-[#d6adff]">Personal Finance OS · Real-Time Read-Only Sync</span>
       </div>
 
-      <h1 data-design-text-token="display-lg" class="font-headline text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-on-surface text-balance leading-[1.08] drop-shadow-[0_2px_18px_rgba(0,0,0,0.85)]">
+      <h1 data-design-text-token="display-lg" class="font-headline text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-on-surface text-balance leading-[1.08] drop-shadow-[0_2px_18px_rgba(0,0,0,0.85)] hero-enter hero-enter-d2">
         <span class="bg-gradient-to-r from-[#f7f7f8] via-[#e0b3ff] to-[#9312ff] bg-clip-text text-transparent">Nuvio</span> Track Smarter,<br class="hidden sm:inline"> Save Faster, Stay Clear.
       </h1>
 
-      <p data-design-text-token="body-md" class="font-body text-body-md sm:text-title-md font-normal text-[#b3b0af] max-w-2xl text-pretty drop-shadow-[0_1px_10px_rgba(0,0,0,0.9)]">
+      <p data-design-text-token="body-md" class="font-body text-body-md sm:text-title-md font-normal text-[#b3b0af] max-w-2xl text-pretty drop-shadow-[0_1px_10px_rgba(0,0,0,0.9)] hero-enter hero-enter-d3">
         The first unified personal finance workspace built for dark-mode clarity. Connect your banks, track annual cash flow, and control recurring subscriptions in one obsidian-glass dashboard.
       </p>
 
-      <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-1 hero-enter hero-enter-d4">
         <a href="dashboard.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-full obsidian-violet-btn font-body text-label-lg transition-all duration-state-change focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
           <span data-design-text-token="label-lg">Get Started Free</span>
-          <span class="material-symbols-outlined text-title-md" aria-hidden="true">arrow_forward</span>
+          <span class="material-symbols-outlined text-title-md hover-arrow" aria-hidden="true">arrow_forward</span>
         </a>
         <a href="#features" class="inline-flex items-center gap-2 px-6 py-3 rounded-full obsidian-dark-btn font-body text-label-lg transition-all duration-state-change focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
           <span class="material-symbols-outlined text-title-md text-[#d6adff]" aria-hidden="true">play_circle</span>
@@ -326,7 +463,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
     </div>
 
     <!-- Rising Nuvio Product Dashboard Preview (Full-scale, cropped to upper half) -->
-    <div class="relative z-10 w-full max-w-[1204px] mx-auto px-4 sm:px-6 pt-2">
+    <div class="relative z-10 w-full max-w-[1204px] mx-auto px-4 sm:px-6 pt-2 hero-enter hero-enter-d5">
       <!-- Screen-blended dashboard top glow -->
       <div class="pointer-events-none mx-auto w-3/4 h-12 -mb-6 bg-gradient-to-b from-primary/35 to-transparent blur-2xl" aria-hidden="true"></div>
 
@@ -343,35 +480,63 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
     </div>
   </section>
 
-  <!-- ==================== SECTION 2: TRUSTED INSTITUTIONS STRIP ==================== -->
+  <!-- ==================== SECTION 2: TRUSTED INSTITUTIONS STRIP (LOOPING MARQUEE) ==================== -->
   <section class="relative z-10 w-full bg-[#000000] py-14 sm:py-16">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col items-center gap-10">
       <p data-design-text-token="title-md" class="font-headline text-lg sm:text-xl font-medium text-[#f7f7f8] text-center tracking-tight">Trusted by 140,000+ Growing Teams &amp; Individuals</p>
-      <div class="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-        <div class="flex flex-wrap sm:flex-nowrap items-center justify-center sm:justify-between gap-8 sm:gap-10 px-6 text-[#d4d4d8]">
-          <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-70 hover:opacity-100 transition-opacity duration-200 select-none">
-            <span class="material-symbols-outlined text-xl" aria-hidden="true">account_balance</span>
-            <span>VaultBank</span>
+      <div class="w-full overflow-hidden marquee-wrap [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+        <div class="marquee-track text-[#d4d4d8]">
+          <div class="flex items-center gap-12 sm:gap-16 pr-12 sm:pr-16 shrink-0">
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-75 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl" aria-hidden="true">account_balance</span>
+              <span>VaultBank</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl" aria-hidden="true">north_east</span>
+              <span>Northstar</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl" aria-hidden="true">bolt</span>
+              <span>ClearPay</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl" aria-hidden="true">layers</span>
+              <span>ArcLedger</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl" aria-hidden="true">waves</span>
+              <span>MintFlow</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-75 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl" aria-hidden="true">credit_card</span>
+              <span>SummitCard</span>
+            </div>
           </div>
-          <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-80 hover:opacity-100 transition-opacity duration-200 select-none">
-            <span class="material-symbols-outlined text-xl" aria-hidden="true">north_east</span>
-            <span>Northstar</span>
-          </div>
-          <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none">
-            <span class="material-symbols-outlined text-xl" aria-hidden="true">bolt</span>
-            <span>ClearPay</span>
-          </div>
-          <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none">
-            <span class="material-symbols-outlined text-xl" aria-hidden="true">layers</span>
-            <span>ArcLedger</span>
-          </div>
-          <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-80 hover:opacity-100 transition-opacity duration-200 select-none">
-            <span class="material-symbols-outlined text-xl" aria-hidden="true">waves</span>
-            <span>MintFlow</span>
-          </div>
-          <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-70 hover:opacity-100 transition-opacity duration-200 select-none">
-            <span class="material-symbols-outlined text-xl" aria-hidden="true">credit_card</span>
-            <span>SummitCard</span>
+          <div class="flex items-center gap-12 sm:gap-16 pr-12 sm:pr-16 shrink-0" aria-hidden="true">
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-75 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl">account_balance</span>
+              <span>VaultBank</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl">north_east</span>
+              <span>Northstar</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl">bolt</span>
+              <span>ClearPay</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl">layers</span>
+              <span>ArcLedger</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-85 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl">waves</span>
+              <span>MintFlow</span>
+            </div>
+            <div class="flex items-center gap-2 font-headline text-lg sm:text-xl font-semibold tracking-tight opacity-75 hover:opacity-100 transition-opacity duration-200 select-none whitespace-nowrap">
+              <span class="material-symbols-outlined text-xl">credit_card</span>
+              <span>SummitCard</span>
+            </div>
           </div>
         </div>
       </div>
@@ -388,7 +553,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
 
     <div class="relative grid grid-cols-1 md:grid-cols-2 rounded-xl overflow-hidden border border-outline-variant bg-[#0b0911]/80">
       <!-- Central Hub Badge (Desktop) -->
-      <div class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full obsidian-violet-btn items-center justify-center border-4 border-[#000000]" aria-hidden="true">
+      <div class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full obsidian-violet-btn hub-pulse items-center justify-center border-4 border-[#000000]" aria-hidden="true">
         <svg class="w-7 h-7 text-on-primary" viewBox="0 0 24 24" fill="none">
           <path d="M5.5 17.5V6.5L13 14.5V6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
           <path d="M13 14.5L18.5 8.5V17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.7"></path>
@@ -396,32 +561,32 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
         </svg>
       </div>
 
-      <div class="p-8 sm:p-10 border-b md:border-r border-outline-variant flex flex-col items-center text-center gap-3 bg-gradient-to-br from-[#9312ff]/10 to-transparent">
-        <span class="w-11 h-11 rounded-md bg-primary/20 border border-primary/40 flex items-center justify-center text-secondary">
+      <div class="group p-8 sm:p-10 border-b md:border-r border-outline-variant flex flex-col items-center text-center gap-3 bg-gradient-to-br from-[#9312ff]/10 to-transparent transition-colors duration-300 hover:bg-[#9312ff]/[0.09]">
+        <span class="w-11 h-11 rounded-md bg-primary/20 border border-primary/40 flex items-center justify-center text-secondary transition-transform duration-300 group-hover:scale-110">
           <span class="material-symbols-outlined text-headline-md" aria-hidden="true">insights</span>
         </span>
         <h3 data-design-text-token="title-md" class="font-headline text-title-md text-on-surface">Real-Time Cash Flow</h3>
         <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant max-w-xs text-pretty">Compare Total Balance, Income, and Expenses on a synchronized 12-month dual-scale curve.</p>
       </div>
 
-      <div class="p-8 sm:p-10 border-b border-outline-variant flex flex-col items-center text-center gap-3">
-        <span class="w-11 h-11 rounded-md bg-surface-container-high border border-outline-variant flex items-center justify-center text-warning">
+      <div class="group p-8 sm:p-10 border-b border-outline-variant flex flex-col items-center text-center gap-3 transition-colors duration-300 hover:bg-[#9312ff]/[0.06]">
+        <span class="w-11 h-11 rounded-md bg-surface-container-high border border-outline-variant flex items-center justify-center text-warning transition-transform duration-300 group-hover:scale-110 group-hover:border-primary/40">
           <span class="material-symbols-outlined text-headline-md" aria-hidden="true">sync</span>
         </span>
         <h3 data-design-text-token="title-md" class="font-headline text-title-md text-on-surface">Instant Account Sync</h3>
         <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant max-w-xs text-pretty">Live balance updates across checking, digital wallets, and cards with one-click session refresh.</p>
       </div>
 
-      <div class="p-8 sm:p-10 border-b md:border-b-0 md:border-r border-outline-variant flex flex-col items-center text-center gap-3">
-        <span class="w-11 h-11 rounded-md bg-surface-container-high border border-outline-variant flex items-center justify-center text-success">
+      <div class="group p-8 sm:p-10 border-b md:border-b-0 md:border-r border-outline-variant flex flex-col items-center text-center gap-3 transition-colors duration-300 hover:bg-[#9312ff]/[0.06]">
+        <span class="w-11 h-11 rounded-md bg-surface-container-high border border-outline-variant flex items-center justify-center text-success transition-transform duration-300 group-hover:scale-110 group-hover:border-primary/40">
           <span class="material-symbols-outlined text-headline-md" aria-hidden="true">receipt_long</span>
         </span>
         <h3 data-design-text-token="title-md" class="font-headline text-title-md text-on-surface">Subscription Radar</h3>
         <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant max-w-xs text-pretty">Spot unpaid renewals, sort billing cycles, and settle recurring charges before they surprise you.</p>
       </div>
 
-      <div class="p-8 sm:p-10 flex flex-col items-center text-center gap-3 bg-gradient-to-tl from-[#9312ff]/10 to-transparent">
-        <span class="w-11 h-11 rounded-md bg-primary/20 border border-primary/40 flex items-center justify-center text-[#d6adff]">
+      <div class="group p-8 sm:p-10 flex flex-col items-center text-center gap-3 bg-gradient-to-tl from-[#9312ff]/10 to-transparent transition-colors duration-300 hover:bg-[#9312ff]/[0.09]">
+        <span class="w-11 h-11 rounded-md bg-primary/20 border border-primary/40 flex items-center justify-center text-[#d6adff] transition-transform duration-300 group-hover:scale-110">
           <span class="material-symbols-outlined text-headline-md" aria-hidden="true">verified_user</span>
         </span>
         <h3 data-design-text-token="title-md" class="font-headline text-title-md text-on-surface">Read-Only Bank Security</h3>
@@ -439,7 +604,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
     </div>
 
     <!-- Wide Featured Bento Card -->
-    <article class="relative overflow-hidden rounded-xl obsidian-hero-card border p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+    <article class="relative overflow-hidden rounded-xl obsidian-hero-card hover-card border p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
       <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#9312ff]/20 via-transparent to-[#7a1cf8]/15" aria-hidden="true"></div>
       <div class="relative lg:col-span-5 flex flex-col items-start gap-4">
         <span class="px-3 py-1 rounded-full bg-primary/20 border border-primary/40 font-body text-label-sm text-[#d6adff]">Interactive Analytics</span>
@@ -447,7 +612,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
         <p data-design-text-token="body-md" class="font-body text-body-md text-[#b7a8c9] text-pretty">Click any month from Jan to Dec to inspect Net Cash Flow and automatically update your Total Balance, Income, and Expenses cards.</p>
         <a href="dashboard.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full obsidian-violet-btn font-body text-label-lg">
           <span>Try Interactive Chart</span>
-          <span class="material-symbols-outlined text-title-md" aria-hidden="true">arrow_forward</span>
+          <span class="material-symbols-outlined text-title-md hover-arrow" aria-hidden="true">arrow_forward</span>
         </a>
       </div>
 
@@ -457,15 +622,15 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
           <span class="font-body text-label-sm text-success tabular-nums">Net +$4,380</span>
         </div>
         <div class="grid grid-cols-3 gap-2.5">
-          <div class="p-3 rounded-md obsidian-nav-capsule border">
+          <div class="p-3 rounded-md obsidian-nav-capsule border hover-mini-card">
             <span class="font-body text-body-sm text-[#b7a8c9]">Balance</span>
             <p class="font-headline text-title-md text-on-surface tabular-nums">$15,890.00</p>
           </div>
-          <div class="p-3 rounded-md obsidian-nav-capsule border">
+          <div class="p-3 rounded-md obsidian-nav-capsule border hover-mini-card">
             <span class="font-body text-body-sm text-success">Income</span>
             <p class="font-headline text-title-md text-on-surface tabular-nums">$6,840.00</p>
           </div>
-          <div class="p-3 rounded-md obsidian-nav-capsule border">
+          <div class="p-3 rounded-md obsidian-nav-capsule border hover-mini-card">
             <span class="font-body text-body-sm text-warning">Expenses</span>
             <p class="font-headline text-title-md text-on-surface tabular-nums">$2,460.00</p>
           </div>
@@ -479,13 +644,13 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
     <!-- Two Side-by-Side Bento Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Left Card: Monthly Spend & Sync Progress -->
-      <article class="rounded-xl obsidian-surface border p-6 flex flex-col justify-between gap-6">
+      <article class="rounded-xl obsidian-surface hover-card border p-6 flex flex-col justify-between gap-6">
         <div class="flex flex-col gap-2">
           <span class="self-start px-3 py-1 rounded-full obsidian-nav-capsule border font-body text-label-sm text-[#d6adff]">Budget Pacing</span>
           <h3 data-design-text-token="headline-md" class="font-headline text-headline-md text-on-surface">Monthly Spend &amp; Sync Health</h3>
           <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant text-pretty">Track how much of your monthly budget is used in real time alongside account sync health.</p>
         </div>
-        <div class="p-5 rounded-lg bg-[#0d0a14] border border-outline-variant flex items-center justify-between gap-4">
+        <div class="p-5 rounded-lg bg-[#0d0a14] border border-outline-variant hover-mini-card flex items-center justify-between gap-4">
           <div class="flex flex-col gap-1">
             <span class="font-headline text-3xl font-bold text-success tabular-nums">62%</span>
             <span class="font-body text-label-sm text-on-surface">Monthly Spend Pacing</span>
@@ -498,14 +663,14 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       </article>
 
       <!-- Right Card: Subscription Radar -->
-      <article class="rounded-xl obsidian-surface border p-6 flex flex-col justify-between gap-6">
+      <article class="rounded-xl obsidian-surface hover-card border p-6 flex flex-col justify-between gap-6">
         <div class="flex flex-col gap-2">
           <span class="self-start px-3 py-1 rounded-full obsidian-nav-capsule border font-body text-label-sm text-[#d6adff]">Recurring Control</span>
           <h3 data-design-text-token="headline-md" class="font-headline text-headline-md text-on-surface">Catch Unpaid Bills Early</h3>
           <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant text-pretty">Every recurring plan—monthly or yearly—is surfaced with status badges and one-tap Pay actions.</p>
         </div>
         <div class="flex flex-col gap-2.5">
-          <div class="p-3 rounded-lg bg-[#0d0a14] border border-outline-variant flex items-center justify-between">
+          <div class="p-3 rounded-lg bg-[#0d0a14] border border-outline-variant hover-mini-card flex items-center justify-between">
             <div class="flex items-center gap-2.5">
               <span class="w-7 h-7 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-error">
                 <span class="material-symbols-outlined text-body-md" aria-hidden="true">palette</span>
@@ -514,7 +679,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
             </div>
             <span class="px-2.5 py-0.5 rounded-full bg-surface-container-high border border-outline-variant font-body text-label-sm text-warning">Unpaid</span>
           </div>
-          <div class="p-3 rounded-lg bg-[#0d0a14] border border-outline-variant flex items-center justify-between">
+          <div class="p-3 rounded-lg bg-[#0d0a14] border border-outline-variant hover-mini-card flex items-center justify-between">
             <div class="flex items-center gap-2.5">
               <span class="w-7 h-7 rounded-full bg-primary-container border border-primary/40 flex items-center justify-center text-secondary">
                 <span class="material-symbols-outlined text-body-md" aria-hidden="true">cloud</span>
@@ -544,7 +709,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5 items-stretch md:items-center pt-2">
       <!-- Starter -->
-      <article class="obsidian-surface border rounded-2xl p-7 sm:p-8 min-h-[430px] flex flex-col justify-between gap-7 transition-all duration-300 hover:border-white/20">
+      <article class="obsidian-surface hover-card border rounded-2xl p-7 sm:p-8 min-h-[430px] flex flex-col justify-between gap-7">
         <div class="flex flex-col gap-5">
           <div class="flex flex-col gap-1.5">
             <h3 class="font-headline text-title-md text-on-surface">Starter</h3>
@@ -562,7 +727,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       </article>
 
       <!-- Nuvio Pro (Highlighted Royal Violet Spotlight) -->
-      <article class="relative z-10 overflow-hidden obsidian-hero-card border border-[#b14eff]/60 rounded-2xl p-7 sm:p-9 min-h-[495px] flex flex-col justify-between gap-7 shadow-[0_24px_70px_rgba(0,0,0,0.85),0_0_55px_rgba(147,18,255,0.28),inset_0_1px_0_rgba(224,179,255,0.38)] transition-all duration-300 hover:border-[#e0b3ff]/70 hover:shadow-[0_28px_80px_rgba(0,0,0,0.9),0_0_70px_rgba(147,18,255,0.42),inset_0_1px_0_rgba(224,179,255,0.48)]">
+      <article class="relative z-10 overflow-hidden obsidian-hero-card border border-[#b14eff]/60 rounded-2xl p-7 sm:p-9 min-h-[495px] flex flex-col justify-between gap-7 shadow-[0_24px_70px_rgba(0,0,0,0.85),0_0_55px_rgba(147,18,255,0.28),inset_0_1px_0_rgba(224,179,255,0.38)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[#e0b3ff]/70 hover:shadow-[0_28px_80px_rgba(0,0,0,0.9),0_0_70px_rgba(147,18,255,0.42),inset_0_1px_0_rgba(224,179,255,0.48)]">
         <div class="pointer-events-none absolute top-0 inset-x-0 top-violet-rim-line" aria-hidden="true"></div>
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(85%_55%_at_50%_0%,rgba(160,32,255,0.34)_0%,rgba(122,28,248,0.14)_45%,transparent_78%)]" aria-hidden="true"></div>
         <div class="relative flex flex-col gap-5">
@@ -584,7 +749,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       </article>
 
       <!-- Family & Wealth -->
-      <article class="obsidian-surface border rounded-2xl p-7 sm:p-8 min-h-[430px] flex flex-col justify-between gap-7 transition-all duration-300 hover:border-white/20">
+      <article class="obsidian-surface hover-card border rounded-2xl p-7 sm:p-8 min-h-[430px] flex flex-col justify-between gap-7">
         <div class="flex flex-col gap-5">
           <div class="flex flex-col gap-1.5">
             <h3 class="font-headline text-title-md text-on-surface">Family &amp; Wealth</h3>
@@ -612,7 +777,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <article class="obsidian-surface border rounded-xl p-6 flex flex-col justify-between gap-4">
+        <article class="obsidian-surface hover-card border rounded-xl p-6 flex flex-col justify-between gap-4">
           <p class="font-body text-body-md text-on-surface-variant text-pretty">“Clicking through the Annual Cash Flow months made it effortless to spot where my recurring software bills were creeping up.”</p>
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-headline text-label-lg text-[#e0b3ff]">M</div>
@@ -623,7 +788,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
           </div>
         </article>
 
-        <article class="obsidian-hero-card border rounded-xl p-6 flex flex-col justify-between gap-4">
+        <article class="obsidian-hero-card hover-card border rounded-xl p-6 flex flex-col justify-between gap-4">
           <p class="font-body text-body-md text-on-surface text-pretty">“The dark obsidian interface is the first finance dashboard I actually enjoy opening every morning. Everything fits cleanly on one screen.”</p>
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 rounded-full obsidian-violet-btn flex items-center justify-center font-headline text-label-lg">D</div>
@@ -634,7 +799,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
           </div>
         </article>
 
-        <article class="obsidian-surface border rounded-xl p-6 flex flex-col justify-between gap-4">
+        <article class="obsidian-surface hover-card border rounded-xl p-6 flex flex-col justify-between gap-4">
           <p class="font-body text-body-md text-on-surface-variant text-pretty">“Read-only bank sync plus instant unpaid subscription alerts saved me from two forgotten annual renewals in the first week.”</p>
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center font-headline text-label-lg text-success">S</div>
@@ -650,19 +815,32 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
     <!-- Compact FAQ -->
     <div id="faq" class="max-w-3xl mx-auto w-full flex flex-col gap-4">
       <h2 class="font-headline text-headline-lg text-on-surface text-center mb-2">Frequently Asked Questions</h2>
-      <details class="obsidian-surface border rounded-lg p-4 group" open>
-        <summary class="flex items-center justify-between cursor-pointer font-body text-label-lg text-on-surface list-none">
+      <details class="obsidian-surface border rounded-lg p-4 group transition-colors duration-200 hover:border-primary/40" open>
+        <summary class="flex items-center justify-between cursor-pointer font-body text-label-lg text-on-surface list-none select-none">
           <span>Is Nuvio bank access read-only?</span>
-          <span class="material-symbols-outlined text-title-md text-[#d6adff]" aria-hidden="true">expand_more</span>
+          <span class="material-symbols-outlined text-title-md text-[#d6adff] faq-chevron" aria-hidden="true">expand_more</span>
         </summary>
-        <p class="mt-2 font-body text-body-sm text-on-surface-variant text-pretty">Yes. Nuvio only requests read-only tokens to display balances, transactions, and recurring charges. We can never initiate transfers or modify your accounts.</p>
+        <div class="faq-body">
+          <p class="pt-2.5 font-body text-body-sm text-on-surface-variant text-pretty">Yes. Nuvio only requests read-only tokens to display balances, transactions, and recurring charges. We can never initiate transfers or modify your accounts.</p>
+        </div>
       </details>
-      <details class="obsidian-surface border rounded-lg p-4 group">
-        <summary class="flex items-center justify-between cursor-pointer font-body text-label-lg text-on-surface list-none">
+      <details class="obsidian-surface border rounded-lg p-4 group transition-colors duration-200 hover:border-primary/40">
+        <summary class="flex items-center justify-between cursor-pointer font-body text-label-lg text-on-surface list-none select-none">
           <span>Can I export my annual cash flow data?</span>
-          <span class="material-symbols-outlined text-title-md text-[#d6adff]" aria-hidden="true">expand_more</span>
+          <span class="material-symbols-outlined text-title-md text-[#d6adff] faq-chevron" aria-hidden="true">expand_more</span>
         </summary>
-        <p class="mt-2 font-body text-body-sm text-on-surface-variant text-pretty">Pro and Family plans include one-click CSV and JSON exports for any reporting period.</p>
+        <div class="faq-body">
+          <p class="pt-2.5 font-body text-body-sm text-on-surface-variant text-pretty">Pro and Family plans include one-click CSV and JSON exports for any reporting period.</p>
+        </div>
+      </details>
+      <details class="obsidian-surface border rounded-lg p-4 group transition-colors duration-200 hover:border-primary/40">
+        <summary class="flex items-center justify-between cursor-pointer font-body text-label-lg text-on-surface list-none select-none">
+          <span>How does Nuvio detect unpaid or upcoming subscriptions?</span>
+          <span class="material-symbols-outlined text-title-md text-[#d6adff] faq-chevron" aria-hidden="true">expand_more</span>
+        </summary>
+        <div class="faq-body">
+          <p class="pt-2.5 font-body text-body-sm text-on-surface-variant text-pretty">Nuvio automatically scans recurring charges across your synced accounts, flags unpaid or overdue renewals in your Subscription List, and lets you mark or settle them in one click.</p>
+        </div>
       </details>
     </div>
   </section>
@@ -670,7 +848,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
   <!-- ==================== SECTION 7: BOTTOM PLANET HORIZON CTA + FOOTER ==================== -->
   <section class="relative z-10 w-full overflow-hidden pt-20 pb-12 planet-horizon-bottom border-t border-outline-variant">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center gap-5">
-      <div class="w-12 h-12 rounded-xl obsidian-violet-btn flex items-center justify-center">
+      <div class="w-12 h-12 rounded-xl obsidian-violet-btn hub-pulse flex items-center justify-center">
         <svg class="w-6 h-6 text-on-primary" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M5.5 17.5V6.5L13 14.5V6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
           <path d="M13 14.5L18.5 8.5V17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.7"></path>
@@ -681,7 +859,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       <p class="font-body text-body-md text-[#b7a8c9] max-w-xl text-pretty">Launch the Nuvio dashboard in seconds and see your balances, income, expenses, and subscriptions in one place.</p>
       <a href="dashboard.html" class="inline-flex items-center gap-2 px-7 py-3 rounded-full obsidian-violet-btn font-body text-label-lg">
         <span>Launch Nuvio Dashboard</span>
-        <span class="material-symbols-outlined text-title-md" aria-hidden="true">arrow_forward</span>
+        <span class="material-symbols-outlined text-title-md hover-arrow" aria-hidden="true">arrow_forward</span>
       </a>
     </div>
 
@@ -764,6 +942,121 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
         billMonthly.className = 'px-4 py-1.5 rounded-full font-body text-label-sm text-on-surface-variant hover:text-on-surface';
       });
     }
+    // Smooth Scroll-Reveal (non-blocking so initial & full-page captures stay visible)
+    (function initScrollReveal() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('IntersectionObserver' in window)) return;
+      const targets = document.querySelectorAll('section article, #features .relative.grid, #faq details');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          observer.unobserve(el);
+          if (typeof el.animate === 'function') {
+            el.animate(
+              [
+                { opacity: 0.25, transform: 'translateY(16px)' },
+                { opacity: 1, transform: 'translateY(0)' }
+              ],
+              { duration: 520, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+            );
+          }
+        });
+      }, { threshold: 0.12 });
+      targets.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top > window.innerHeight * 0.95) {
+          observer.observe(el);
+        }
+      });
+    })();
+
+    // Scroll-Spy Active Nav Pill Highlight
+    (function initScrollSpy() {
+      const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
+      const sections = navLinks
+        .map((a) => document.querySelector(a.getAttribute('href')))
+        .filter(Boolean);
+      if (!navLinks.length || !sections.length) return;
+      const activeClass = 'px-4 py-1.5 rounded-full bg-[#171420] border border-primary/40 font-body text-label-lg text-on-surface transition-colors duration-state-change';
+      const idleClass = 'px-4 py-1.5 rounded-full font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors duration-state-change';
+      const updateActive = () => {
+        const y = window.scrollY + 140;
+        let currentId = sections[0].id;
+        for (const sec of sections) {
+          if (sec.offsetTop <= y) currentId = sec.id;
+        }
+        navLinks.forEach((link) => {
+          link.className = link.getAttribute('href') === `#${currentId}` ? activeClass : idleClass;
+        });
+      };
+      window.addEventListener('scroll', updateActive, { passive: true });
+    })();
+
+    // Smooth FAQ Open & Close Animation
+    (function initSmoothFaq() {
+      const items = document.querySelectorAll('#faq details');
+      items.forEach((details) => {
+        const summary = details.querySelector('summary');
+        const body = details.querySelector('.faq-body');
+        if (!summary || !body) return;
+        let isAnimating = false;
+        summary.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (isAnimating) return;
+          isAnimating = true;
+          if (details.open) {
+            const startH = body.offsetHeight;
+            body.style.height = `${startH}px`;
+            body.style.opacity = '1';
+            requestAnimationFrame(() => {
+              body.style.height = '0px';
+              body.style.opacity = '0';
+            });
+            body.addEventListener('transitionend', function onEnd(ev) {
+              if (ev.propertyName !== 'height') return;
+              body.removeEventListener('transitionend', onEnd);
+              details.open = false;
+              body.style.height = '';
+              body.style.opacity = '';
+              isAnimating = false;
+            });
+          } else {
+            details.open = true;
+            const targetH = body.scrollHeight;
+            body.style.height = '0px';
+            body.style.opacity = '0';
+            requestAnimationFrame(() => {
+              body.style.height = `${targetH}px`;
+              body.style.opacity = '1';
+            });
+            body.addEventListener('transitionend', function onEnd(ev) {
+              if (ev.propertyName !== 'height') return;
+              body.removeEventListener('transitionend', onEnd);
+              body.style.height = '';
+              body.style.opacity = '';
+              isAnimating = false;
+            });
+          }
+        });
+      });
+    })();
+
+    // Navbar Frosted Blur only after scrolling past the hero meteor glow
+    (function initNavbarScrollBlur() {
+      const navbar = document.getElementById('main-navbar');
+      const heroGlow = document.getElementById('hero-glow-video');
+      const homeSection = document.getElementById('home');
+      if (!navbar) return;
+      const updateNavbarBlur = () => {
+        const threshold = heroGlow && heroGlow.offsetHeight
+          ? heroGlow.offsetHeight - 80
+          : (homeSection ? Math.min(560, homeSection.offsetHeight * 0.65) : 520);
+        navbar.classList.toggle('is-scrolled', window.scrollY > threshold);
+      };
+      updateNavbarBlur();
+      window.addEventListener('scroll', updateNavbarBlur, { passive: true });
+    })();
   </script>
 
 
