@@ -159,10 +159,11 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
       box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(224, 179, 255, 0.12);
     }
     .obsidian-sidebar-card {
-      background-color: var(--sidebar-bg);
-      border: 1px solid var(--hairline);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(224, 179, 255, 0.12);
     }
     .obsidian-surface {
       background-color: var(--panel-surface);
@@ -332,7 +333,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
 
         <div class="p-2.5 rounded-xl obsidian-sidebar-card flex items-center justify-between gap-2">
           <div class="flex items-center gap-2.5 min-w-0">
-            <img src="https://lh3.googleusercontent.com/aida/ALJJyrBmMDbvL8oDo2zh63BruTwT0dW6nBDKaTAIe-3oTHoQ_11QCntjRE8rglu_f0YR2T-3kHcqiy3UCixX6ig8K8RW4G-1cqTj1ufNhYSC_oOx-BXVLNlmFLr6SeDBWZxKy1DJmtuhq1uivSzdFDziK4VudEM4eb6D1x9Gr4CaCd_0VDLBkh84aVRiXuU-GmKwJjYQGfSY2IAJl_LzPoX2TWt4gC11GBGA8HzBvD-o7eaVBipl9Lc" alt="Raka Pratama profile photo" class="w-8 h-8 rounded-full object-cover border border-outline-variant shrink-0">
+            <img src="https://lh3.googleusercontent.com/aida/ALJJyrCW7tYIIjE0BzTDYpGLPFJ-yItWMB936ClvjgzcBArItLBrppOMn8gviyFJYVee1ErojFqkcO64EfjApoPjhxja5PLc3DPQv57z44uTtJsabaGmpPIljPBHL5cfp6jTJXUY6VD0MnAOuq99SQK90AQaPNdgsISr7AluWg9JpOTNVHLu3iigv_LOd0kVxQK7N5W9TfJ1D_r_vgNfuaA2Hl9mHBbNjsRO8t5Vm7qDhD526dXuRdo" alt="Raka Pratama profile photo" class="w-8 h-8 rounded-full object-cover border border-outline-variant shrink-0">
             <div class="min-w-0 flex flex-col">
               <span data-design-text-token="label-sm" class="font-body text-label-sm text-on-surface truncate">Andra Pratama</span>
               <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant truncate">andra@mail.com</span>
@@ -522,11 +523,14 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
                 </div>
                 <div class="flex items-center gap-2">
                   <label for="chart-year-select" class="sr-only">Select chart year</label>
-                  <select id="chart-year-select" class="rounded-full obsidian-nav-capsule border text-on-surface font-body text-label-sm py-1.5 pl-3 pr-7 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary cursor-pointer">
-                    <option value="2026" class="bg-[#0d0a14] text-on-surface">2026</option>
-                    <option value="2025" class="bg-[#0d0a14] text-on-surface">2025</option>
-                    <option value="empty" class="bg-[#0d0a14] text-on-surface">2024 (Empty)</option>
-                  </select>
+                  <div class="relative inline-flex items-center">
+                    <select id="chart-year-select" class="appearance-none bg-none h-8 rounded-full obsidian-nav-capsule border border-outline-variant hover:border-outline text-on-surface font-body text-label-sm pl-3.5 pr-8 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors duration-state-change cursor-pointer">
+                      <option value="2026" class="bg-[#0d0a14] text-on-surface">2026</option>
+                      <option value="2025" class="bg-[#0d0a14] text-on-surface">2025</option>
+                      <option value="empty" class="bg-[#0d0a14] text-on-surface">2024 (Empty)</option>
+                    </select>
+                    <span class="material-symbols-outlined text-body-md text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" aria-hidden="true">expand_more</span>
+                  </div>
                   <button id="chart-more-btn" type="button" aria-label="Annual cash flow options" class="inline-flex items-center justify-center w-8 h-8 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
                     <span class="material-symbols-outlined text-title-md" aria-hidden="true">more_horiz</span>
                   </button>
@@ -631,10 +635,13 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
                 <h2 data-design-text-token="title-md" class="font-body text-title-md text-on-surface whitespace-nowrap">Transaction History</h2>
               </div>
               <label for="tx-history-period" class="sr-only">Transaction history period</label>
-              <select id="tx-history-period" class="shrink-0 rounded-full obsidian-nav-capsule border text-on-surface font-body text-label-sm py-1 pl-2.5 pr-6 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary cursor-pointer">
-                <option value="this-month" class="bg-[#0d0a14] text-on-surface">This Month</option>
-                <option value="last-month" class="bg-[#0d0a14] text-on-surface">Last Month</option>
-              </select>
+              <div class="relative inline-flex items-center shrink-0">
+                <select id="tx-history-period" class="appearance-none bg-none h-8 rounded-full obsidian-nav-capsule border border-outline-variant hover:border-outline text-on-surface font-body text-label-sm pl-3.5 pr-8 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors duration-state-change cursor-pointer">
+                  <option value="this-month" class="bg-[#0d0a14] text-on-surface">This Month</option>
+                  <option value="last-month" class="bg-[#0d0a14] text-on-surface">Last Month</option>
+                </select>
+                <span class="material-symbols-outlined text-body-md text-on-surface-variant pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" aria-hidden="true">expand_more</span>
+              </div>
             </header>
 
             <!-- Monthly Spend Progress Strip -->
@@ -737,7 +744,7 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
             <div class="flex flex-col gap-3">
               <header class="flex items-center justify-between gap-2">
                 <h2 data-design-text-token="title-md" class="font-body text-title-md text-on-surface truncate">Connected Accounts</h2>
-                <span data-design-text-token="label-sm" id="connected-count-badge" class="shrink-0 whitespace-nowrap px-3 py-1.5 rounded-full obsidian-nav-capsule text-on-surface border font-body text-label-sm tabular-nums">3 Accounts</span>
+                <span data-design-text-token="label-sm" id="connected-count-badge" class="inline-flex items-center h-8 shrink-0 whitespace-nowrap px-3.5 rounded-full obsidian-nav-capsule border border-outline-variant text-on-surface font-body text-label-sm tabular-nums">3 Accounts</span>
               </header>
 
               <ul id="accounts-list" class="flex flex-col gap-2.5">
@@ -796,9 +803,12 @@ if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
                     <span data-design-text-token="label-sm" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-high text-error font-body text-label-sm shrink-0">Failed</span>
                   </div>
                   <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant pl-9">Session expired. Refresh access.</p>
-                  <div class="flex items-center justify-between gap-2 pt-1 pl-9">
-                    <button type="button" onclick="retrySync(&#39;citi&#39;)" class="px-2.5 py-0.5 rounded-sm obsidian-violet-btn font-body text-label-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary">Refresh</button>
-                    <button type="button" onclick="disconnectAccount(&#39;citi&#39;, &#39;Citibank&#39;)" class="font-body text-label-sm text-error hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error rounded-sm">Disconnect</button>
+                  <div class="flex items-center justify-between gap-2 pt-1.5 pl-9">
+                    <button type="button" onclick="retrySync(&#39;citi&#39;)" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full obsidian-violet-btn font-body text-label-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary transition-all duration-state-change">
+                      <span class="material-symbols-outlined text-body-sm" aria-hidden="true">refresh</span>
+                      <span>Refresh</span>
+                    </button>
+                    <button type="button" onclick="disconnectAccount(&#39;citi&#39;, &#39;Citibank&#39;)" class="px-2.5 py-1 rounded-full font-body text-label-sm text-error hover:bg-error/10 transition-colors duration-state-change focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error">Disconnect</button>
                   </div>
                 </li>
               </ul>
